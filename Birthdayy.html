@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Baby!</title>
+
+    <style>
+        @font-face {
+            font-family: 'MightySpidey';
+            src: url('Mightyspidey-pmaa.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'ComebackHome';
+            src: url('CombackHomeRegular-jEMd9.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'MomFont';
+            src: url('Mom差___.ttf') format('truetype');
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('Spiderman.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #800000;
+            text-align: center;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .click-container {
+            position: absolute;
+            bottom: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .spiderweb {
+            width: 80px;
+            height: auto;
+            opacity: 0.9;
+        }
+
+        .click-anywhere {
+            font-size: 1.5rem;
+            font-family: 'MightySpidey', Arial, sans-serif;
+            color: white;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .content {
+            position: absolute;
+            bottom: 14%;
+            width: 100%;
+            display: none;
+            line-height: 1.1;
+        }
+
+        .typing-text, .love-text {
+            border-right: 2px solid #FFFDD0;
+            animation: blink 0.8s infinite;
+        }
+
+        .typing-text {
+            font-size: 2rem;
+            font-family: 'MightySpidey', Arial, sans-serif;
+            color: #800000;
+            margin: 0;
+            text-shadow: none;
+            white-space: nowrap;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .love-text {
+            font-size: 2rem;
+            font-family: 'ComebackHome', Arial, sans-serif;
+            color: #FFFDD0;
+            margin-top: 0px;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        .click-here {
+            font-size: 1.5rem;
+            font-family: 'ComebackHome', Arial, sans-serif;
+            color: white;
+            position: absolute;
+            bottom: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            display: none;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .click-here:hover {
+            color: #FFD700;
+        }
+
+        .spotify-container {
+            position: absolute;
+            bottom: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .spotify-link {
+            font-size: 1.5rem;
+            font-family: 'ComebackHome', Arial, sans-serif;
+            color: #FFFDD0;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .spotify-link:hover {
+            color: #FFD700;
+        }
+
+        .spotify-embed {
+            width: 300px;
+            height: 380px;
+            border-radius: 15px;
+        }
+
+        .love-letter {
+            font-size: 0.7rem;
+            font-family: 'MomFont', Arial, sans-serif;
+            color: #FFFDD0;
+            width: 50%;
+            text-align: justify;
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            white-space: pre-wrap;
+            line-height: 1.4;
+            padding: 10px;
+            overflow: hidden;
+        }
+
+        /* Hide the audio player */
+        #backgroundMusic {
+            display: none;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="click-container" id="clickContainer" onclick="startTyping()">
+        <img src="click-icon.png" class="spiderweb" alt="Spider Web">
+        <p class="click-anywhere">Click anywhere</p>
+    </div>
+
+    <div class="content" id="textContainer">
+        <h1 class="typing-text" id="birthdayText"></h1>
+        <p class="love-text" id="loveText"></p>
+    </div>
+
+    <p class="click-here" id="clickHere" onclick="showSpotify()">Click here</p>
+
+    <div class="spotify-container" id="spotifyContainer">
+        <a href="https://open.spotify.com/playlist/7GvvCd3cW0L0ObmYsWtm6l?si=0e0de090825a4bd6" target="_blank" class="spotify-link">
+            Here is what you sound like to me~
+        </a>
+        <iframe class="spotify-embed" src="https://open.spotify.com/embed/playlist/7GvvCd3cW0L0ObmYsWtm6l" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+    </div>
+
+    <p class="love-letter" id="loveLetter"></p>
+
+    <!-- Invisible Audio Player -->
+    <audio id="backgroundMusic" src="Breathe Slow by Rook1e with Lyrics.mp3" type="audio/mpeg"></audio>
+
+    <script>
+        let hasTyped = false;
+
+        function startTyping() {
+            if (hasTyped) return;
+            hasTyped = true;
+            
+            document.getElementById('clickContainer').style.display = "none";
+            document.getElementById('textContainer').style.display = "block";
+
+            let birthdayMessage = "Happy Birthday, Baby! 🎂";
+            let loveMessage = "I love you, my friendly neighbourhood flirt 💋 🎉🕷️";
+            let speed = 100;
+            let i = 0, j = 0;
+
+            function typeBirthday() {
+                if (i < birthdayMessage.length) {
+                    document.getElementById('birthdayText').innerHTML += birthdayMessage.charAt(i);
+                    i++;
+                    setTimeout(typeBirthday, speed);
+                } else {
+                    setTimeout(typeLove, 500);
+                }
+            }
+
+            function typeLove() {
+                if (j < loveMessage.length) {
+                    document.getElementById('loveText').innerHTML += loveMessage.charAt(j);
+                    j++;
+                    setTimeout(typeLove, speed);
+                } else {
+                    setTimeout(showClickHere, 500);
+                }
+            }
+
+            function showClickHere() {
+                document.getElementById('clickHere').style.display = "block";
+            }
+
+            let audio = document.getElementById("backgroundMusic");
+            audio.play().catch(error => console.log("Autoplay blocked"));
+
+            typeBirthday();
+        }
+
+        function showSpotify() {
+            document.getElementById('textContainer').style.display = "none";
+            document.getElementById('clickHere').style.display = "none";
+            document.getElementById('spotifyContainer').style.display = "block";
+
+            let fullLetter = `"A leap of faith" but that's not what it was for me. It wasn't a leap at all. It was walking into a house and suddenly realizing that I'm home. I know we are going through a rough road rn but know that we're close to better roads by the sea. With you, I'll never be hopeless, so just hold my hand. I know I can't be there with you rn and that sucks. But I will be there next year, the year after, and all the years to come. You are my forever, and I'll make sure that does not change. 
+I love you, Jaan. You're worth going every mile between us."`;
+
+            let letterElement = document.getElementById('loveLetter');
+            letterElement.style.display = "block";
+
+            let k = 0;
+            function typeLetter() {
+                if (k < fullLetter.length) {
+                    letterElement.innerHTML += fullLetter.charAt(k);
+                    k++;
+                    setTimeout(typeLetter, 100);
+                }
+            }
+            typeLetter();
+        }
+    </script>
+</body>
+
+</html>
